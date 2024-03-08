@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family:"Comic Sans MS";
+            color:black;
+        }
+        table, td {
+            border-collapse:collapse;
+            width:110px;
+            table-layout:fixed;
+        }
+        td {
+            background-color:rgb(240, 240, 240);
+            padding:5px;
+            border:3px solid black;
+        }
+        .number:hover {
+            background-color:rgb(210, 210, 210);
+            transition:0.2s;
+        }
+        .number {
+            background-color:rgb(240, 240, 240);
+            transition:0.2s;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td id="box" colspan="4" style="height:24px"></td>
+        </tr>
+        <tr>
+            <td colspan="2" onclick="onInput('C','C')" class="number">C</td>
+            <td onclick="onInput('^', '**')" class="number">^</td>
+            <td onclick="onInput('÷','/')" class="number">÷</td>
+        </tr>
+        <tr>
+            <td onclick="onInput(7, 7)" class="number">7</td>
+            <td onclick="onInput(8, 8)" class="number">8</td>
+            <td onclick="onInput(9, 9)" class="number">9</td>
+            <td onclick="onInput('×','*')" class="number">×</td>
+        </tr>
+        <tr>
+            <td onclick="onInput(4, 4)" class="number">4</td>
+            <td onclick="onInput(5, 5)" class="number">5</td>
+            <td onclick="onInput(6, 6)" class="number">6</td>
+            <td onclick="onInput('−','-')" class="number">−</td>
+        </tr>
+        <tr>
+            <td onclick="onInput(1, 1)" class="number">1</td>
+            <td onclick="onInput(2, 2)" class="number">2</td>
+            <td onclick="onInput(3, 3)" class="number">3</td>
+            <td onclick="onInput('+','+')" class="number">+</td>
+        </tr>
+        <tr>
+            <td onclick="onInput(0, 0)" class="number">0</td>
+            <td onclick="onInput('.', '.')" class="number">.</td>
+            <td onclick="onInput('<', '<')" class="number">🡐</td>
+            <td onclick="onInput('=','=')" class="number">=</td>
+        </tr>
+    </table>
+
+    <script>
+        let expression_view = ""
+        let expression_real = ""
+        function onInput(view, input) {
+            let special = isSpecialChar(input)
+            if(special == false) {
+                expression_view += view
+                expression_real += input
+                updateExpressionView()
+            }
+        }
+        
+        function isSpecialChar(input) {
+            if(input == "=") {
+                let output = eval(expression_real).toString()
+                expression_view = output
+                expression_real = output
+                updateExpressionView()
+                return true
+            } else if(input == "<") {
+                expression_real = expression_real.toString()
+                expression_view = expression_view.toString()
+                let last_char = expression_view.substring(expression_view.length - 1, expression_view.length)
+
+                if(last_char == "^") {
+                    expression_real = expression_real.substring(0, expression_real.length - 2)
+                } else {
+                    expression_real = expression_real.substring(0, expression_real.length - 1)
+                }
+
+                expression_view = expression_view.substring(0, expression_view.length - 1)
+                updateExpressionView()
+            } else if(input == "C") {
+                expression_real = ""
+                expression_view = ""
+                updateExpressionView()
+            } else {
+                return false
+            }
+        }
+        
+        function updateExpressionView() {
+            document.getElementById("box").innerHTML = expression_view
+        }
+        
+        window.onerror = function(error) {
+            alert("There was an error evaluating the expression: " + error)
+        }
+    </script>
+</body>
