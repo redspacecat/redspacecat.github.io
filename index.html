@@ -19,6 +19,13 @@
 <a href="https://geographygenius.github.io/">Learn geography easily (work in progress)</a>
 <br><br><br>
 <a href="https://scratch.mit.edu/users/redspacecat/">My scratch profile</a>
-    
+
+<span id="views">This website has -- views</span>
+
+<script>
+r = await fetch("https://services.dumorando.com/dumocount.php?id=rsc")
+t = await r.text()
+document.getElementById("views").innerText = "This website has " + t + " views"
+</script>
 </body>
 </html>
