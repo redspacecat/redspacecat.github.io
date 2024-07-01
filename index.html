@@ -20,12 +20,16 @@
 <br><br><br>
 <a href="https://scratch.mit.edu/users/redspacecat/">My scratch profile</a>
 
-<span id="views">This website has -- views</span>
+<br><br>
+<span id="views" style="font-size: large;">This website has -- views</span>
 
 <script>
-r = await fetch("https://services.dumorando.com/dumocount.php?id=rsc")
-t = await r.text()
-document.getElementById("views").innerText = "This website has " + t + " views"
+getViews()
+async function getViews() {
+    r = await fetch("https://services.dumorando.com/dumocount.php?id=rsc")
+    t = await r.text()
+    document.getElementById("views").innerText = "This website has " + t + " views" 
+}
 </script>
 </body>
 </html>
